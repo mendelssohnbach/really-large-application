@@ -36,3 +36,14 @@ describe('統合テスト', function () {
     ]);
   });
 });
+
+describe('complete()', function () {
+  it('TODOがない場合は失敗するはずです', function () {
+    let todos = new Todos();
+    const expectedError = new Error('TODOは保存されていません。 最初に追加してみませんか？');
+
+    assert.throws(() => {
+      todos.complete('存在しません');
+    }, expectedError);
+  });
+});

@@ -21,6 +21,11 @@ class Todos {
 
   // todo完了関数
   complete(title) {
+    // TODOが空の場合、エラーを投げる
+    if (this.todos.length == 0) {
+      throw new Error('TODOは保存されていません。 最初に追加してみませんか？');
+    }
+
     let todoFound = false;
     this.todos.forEach((todo) => {
       if (todo.title === title) {
