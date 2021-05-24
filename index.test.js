@@ -14,4 +14,10 @@ describe('統合テスト', function () {
     // 実際値, 期待値
     assert.notStrictEqual(todos.list().length, 1);
   });
+  it('TODOがまったくない場合にのみ完了すること', function () {
+    let todos = new Todos();
+    todos.add('ベッドから起き上がる');
+    todos.add('ベッドを整える');
+    assert.strictEqual(todos.list().length, 0);
+  });
 });
