@@ -1,0 +1,28 @@
+{
+  "name": "really-large-application",
+  "version": "1.0.0",
+  "description": "[How To Write Asynchronous Code in Node.js](https://www.digitalocean.com/community/tutorials/how-to-write-asynchronous-code-in-node-js)",
+  "main": "index.js",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "follow-redirects": "^1.14.1"
+  },
+  "devDependencies": {
+    "mocha": "^8.4.0",
+    "request": "^2.88.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mendelssohnbach/really-large-application.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mendelssohnbach/really-large-application/issues"
+  },
+  "homepage": "https://github.com/mendelssohnbach/really-large-application#readme"
+}
