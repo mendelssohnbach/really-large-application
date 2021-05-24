@@ -2,6 +2,7 @@
   "name": "really-large-application",
   "version": "1.0.0",
   "description": "[How To Write Asynchronous Code in Node.js](https://www.digitalocean.com/community/tutorials/how-to-write-asynchronous-code-in-node-js)",
+  "type": "module",
   "main": "index.js",
   "dependencies": {
     "axios": "^0.21.1",
