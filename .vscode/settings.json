@@ -1,0 +1,43 @@
+{
+  "editor.fontFamily": "'HackGenNerd','Cica','Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "eslint.validate": ["javascript"],
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.fontSize": 16,
+  "editor.linkedEditing": true,
+  "editor.tabSize": 2,
+  "editor.wordWrap": "on",
+  "editor.wrappingIndent": "deepIndent",
+  "emmet.includeLanguages": {
+    "javascript": "javascriptreact"
+  },
+  "files.autoSave": "onFocusChange",
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true,
+  "html.format.enable": false,
+  "liveServer.settings.CustomBrowser": "chrome",
+  "files.associations": {
+    "*.ejs": "html"
+  },
+  "liveSassCompile.settings.formats": [
+    {
+      "format": "expanded",
+      "extensionName": ".css",
+      "savePath": "/css"
+    }
+  ],
+  "[markdown]": {
+    "editor.formatOnSave": false
+  },
+  "tailwindCSS.emmetCompletions": true,
+  "tailwindCSS.includeLanguages": {
+    "plaintext": "html",
+    "javascript": "javascript",
+    "javascriptreact": "html",
+    "typescript": "javascript",
+    "typescriptreact": "javascript"
+  }
+}
