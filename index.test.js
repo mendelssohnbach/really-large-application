@@ -5,9 +5,9 @@ import assert from 'assert';
 // import assert from 'assert/strict';
 
 // 統合テスト用のグループを作成
-describe('integration test', function () {
+describe('統合テスト', function () {
   // テストの名前をわかりやすく説明
-  it('should be able to add and complete TODos', function () {
+  it('TODOsを追加して完了することができるはずです', function () {
     // オブジェクトをインスタンス化
     let todos = new Todos();
     // assertモジュールを使用
