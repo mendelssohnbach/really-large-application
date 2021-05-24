@@ -1,7 +1,8 @@
 // テスト対象モジュールインポート
 import Todos from './index.js';
 // assertモジュールをstrictモードでインポート
-import assert from 'assert/strict';
+import assert from 'assert';
+// import assert from 'assert/strict';
 
 // 統合テスト用のグループを作成
 describe('integration test', function () {
