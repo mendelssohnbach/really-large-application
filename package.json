@@ -5,6 +5,7 @@
   "type": "module",
   "main": "index.js",
   "dependencies": {
+    "assert": "^2.0.0",
     "axios": "^0.21.1",
     "follow-redirects": "^1.14.1"
   },
@@ -13,7 +14,7 @@
     "request": "^2.88.2"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha index.test.js"
   },
   "repository": {
     "type": "git",
