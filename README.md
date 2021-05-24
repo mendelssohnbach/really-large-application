@@ -61,3 +61,8 @@ async function() {
 
 ファイルに保存するには`fs/promises`
 
+# Chapter6
+
+[How To Test a Node.js Module with Mocha and Assert](https://www.digitalocean.com/community/tutorials/how-to-test-a-node-js-module-with-mocha-and-assert)
+
+前回の非同期関係のファイル群は`asynchronous`フォルダに移動
