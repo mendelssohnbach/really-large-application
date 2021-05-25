@@ -167,5 +167,57 @@ fs.readFile('./index.html')
   });
 ```
 
+## Step4 Managing Routes
+
+ルーティングの管理
+
+```js
+import http from 'http';
+
+const host = 'localhost';
+const port = '8000';
+
+const books = JSON.stringify([
+  { title: 'The Alchemist', author: 'Paulo Coelho', year: 1988 },
+  { title: 'The Prophet', author: 'Kahlil Gibran', year: 1923 },
+]);
+
+const authors = JSON.stringify([
+  { name: 'Paulo Coelho', countryOfBirth: 'Brazil', yearOfBirth: 1947 },
+  { name: 'Kahlil Gibran', countryOfBirth: 'Lebanon', yearOfBirth: 1883 },
+]);
+
+const requestListener = (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+  switch (req.url) {
+    case '/books':
+      res.writeHead(200);
+      res.end(books);
+      break;
+    case '/authors':
+      res.writeHead(200);
+      res.end(authors);
+      break;
+    default:
+      res.writeHead(404);
+      res.end(JSON.stringify({ error: 'Resource not found' }));
+  }
+};
+
+const server = http.createServer(requestListener);
+server.listen(port, host, () => {
+  console.log(`サーバーはhttpで実行されています http://${host}:${port}`);
+});
+```
+
+```shell
+$ curl http://localhost:8000/books
+[{"title":"The Alchemist","author":"Paulo Coelho","year":1988},{"title":"The Prophet","author":"Kahlil Gibran","year":1923}]
+$ curl http://localhost:8000/authors
+[{"name":"Paulo Coelho","countryOfBirth":"Brazil","yearOfBirth":1947},{"name":"Kahlil Gibran","countryOfBirth":"Lebanon","yearOfBirth":1883}]
+$ curl http://localhost:8000/hoge
+{"error":"Resource not found"}
+```
+
 
 
