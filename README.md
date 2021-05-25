@@ -218,6 +218,3 @@ $ curl http://localhost:8000/authors
 $ curl http://localhost:8000/hoge
 {"error":"Resource not found"}
 ```
-
-
-
