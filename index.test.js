@@ -3,6 +3,7 @@ import Todos from './index.js';
 // assertモジュールをstrictモードでインポート
 import assert from 'assert';
 // import assert from 'assert/strict';
+import fs from 'fs';
 
 // 統合テスト用のグループを作成
 describe('統合テスト', function () {
@@ -45,5 +46,23 @@ describe('complete()', function () {
     assert.throws(() => {
       todos.complete('存在しません');
     }, expectedError);
+  });
+});
+
+describe('saveToFile()', function () {
+  // 非同期関数テストには`done`コールバックが必須
+  it('単一のTODOを保存する必要があります', function (done) {
+    let todos = new Todos();
+    todos.add('CSVを保存する');
+    todos.saveToFile((err) => {
+      // 最初にファイルが存在することを確認
+      assert.strictEqual(fs.existsSync('todos.csv'), true);
+      // 期待値を変数に格納
+      const expectedFileContents = 'Title,Completed\nCSVを保存する,false\n';
+      // Bufferオブジェクトを文字列型に変換
+      const content = fs.readFileSync('todos.csv').toString();
+      assert.strictEqual(content, expectedFileContents);
+      done(err);
+    });
   });
 });

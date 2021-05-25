@@ -1,3 +1,5 @@
+import fs from 'fs';
+
 // Todosクラスを定義
 class Todos {
   constructor() {
@@ -38,6 +40,18 @@ class Todos {
     if (!todoFound) {
       throw new Error(`タイトルのTODOが見つかりません: ${title}`);
     }
+  }
+
+  // ファイル保存
+  saveToFile(callback) {
+    // タイトルヘッダー設定
+    let fileContents = 'Title,Completed\n';
+    this.todos.forEach((todo) => {
+      // 実データをカンマ区切り+改行で連結
+      fileContents += `${todo.title},${todo.completed}\n`;
+    });
+
+    fs.writeFile('todos.csv', fileContents, callback);
   }
 }
 
