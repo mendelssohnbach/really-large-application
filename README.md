@@ -34,5 +34,39 @@ false
 false
 ```
 
+## Step2 Reading from a Buffer
+
+バッファからの読み取り
+
+```shell
+> const hiBuf = Buffer.from('Hi!');
+undefined
+> hiBuf[0];
+72
+> hiBuf[1];
+105
+> hiBuf[2];
+33
+> hiBuf[3];
+undefined
+// バイト列を文字列に変換
+> hiBuf.toString();
+'Hi!'
+// 0バイトの大きさの新しい空のバッファを作成
+> const tenZeroes = Buffer.alloc(10);
+> tenZeroes.toString();
+'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'
+// 16進に変換
+> hiBuf.toString('hex');
+'486921'
+// JSONオブジェクトに変換
+> hiBuf.toJSON();
+{ type: 'Buffer', data: [ 72, 105, 33 ] }
+> tenZeroes.toJSON();
+{ type: 'Buffer', data: [
+    0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0
+  ] }
+
 
 
