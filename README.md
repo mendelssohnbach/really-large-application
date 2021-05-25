@@ -41,3 +41,35 @@ $ curl http://localhost:8000
 ## Step2 eturning Different Types of Content
 
 さまざまな種類のコンテンツを返す
+
+JSONを返す
+
+```js
+const requestListener = (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+  res.writeHead(200);
+  res.end(`{"message": "This is JSON response"}`);
+};
+```
+
+```shell
+$ curl http://localhost:8000
+{"message": "This is JSON response"}
+```
+
+CSVを返す
+
+```js
+const requestListener = (req, res) => {
+  res.setHeader('content-type', 'text/csv');
+  res.setHeader('Content-Disposition', 'attachment;filename=over40club.csv');
+  res.writeHead(200);
+  res.end('id,name,email\n1,Suzuki,suzuki@tekitou.com');
+};
+```
+
+```shell
+$ curl http://localhost:8000
+id,name,email
+1,Suzuki,suzuki@tekitou.com
+```
