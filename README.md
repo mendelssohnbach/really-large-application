@@ -89,4 +89,50 @@ $ curl http://localhost:8000
 <html><body><h1>This is HTML</h1></body></html>
 ```
 
+## Step3 Serving an HTML Page From a File
+
+ファイルからHTMLページを提供する
+
+```js
+import fs from 'fs/promises';
+
+const requestListener = function (req, res) {
+  fs.readFile('./index.html')
+    // fs.readFile(__dirname + '/index.html')
+    .then((contents) => {
+      res.setHeader('Content-Type', 'text/html');
+      res.writeHead(200);
+      res.end(contents);
+    })
+    .catch((err) => {
+      res.writeHead(500);
+      res.end(err);
+      return;
+    });
+};
+```
+
+```shell
+$ curl http://localhost:8000
+<!DOCTYPE html>
+<html lang="en">
+  ...
+    <title>My Website</title>
+    <style>
+      *,
+      html {
+        margin: 0;
+        ...
+      }
+    </style>
+  </head>
+  <body>
+    <div class="cener">
+      <h1>Hello Again!</h1>
+      <p>This is served from a file</p>
+    </div>
+  </body>
+</html>
+```
+
 
