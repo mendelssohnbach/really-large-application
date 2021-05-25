@@ -1,4 +1,4 @@
-# Chapter6
+# Chapter7
 
 [How To Create a Web Server](https://www.digitalocean.com/community/tutorials/how-to-create-a-web-server-in-node-js-with-the-http-module)
 
@@ -37,3 +37,7 @@ $ node hello.js
 $ curl http://localhost:8000
 ハローワールド⚠
 ```
+
+## Step2 eturning Different Types of Content
+
+さまざまな種類のコンテンツを返す
