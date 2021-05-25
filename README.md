@@ -461,3 +461,49 @@ $ npm test
 ```
 
 テストを通す方法がわかりません。
+
+Async/awit
+
+```js
+import fs from 'fs';
+...
+describe('saveToFile()', function () {
+  // 非同期関数テストには`done`コールバックが必須
+  it('単一のTODOを保存する必要があります', async function () {
+    let todos = new Todos();
+    todos.add('CSVを保存する');
+    await todos.saveToFile();
+
+    // 最初にファイルが存在することを確認
+    assert.strictEqual(fs.existsSync('todos.csv'), true);
+    // 期待値を変数に格納
+    const expectedFileContents = 'Title,Completed\nCSVを保存する,false\n';
+    // Bufferオブジェクトを文字列型に変換
+    const content = fs.readFileSync('todos.csv').toString();
+    assert.strictEqual(content, expectedFileContents);
+  });
+});
+```
+
+```shell
+$ npm test
+
+  1 failing
+
+  1) saveToFile()
+       単一のTODOを保存する必要があります:
+
+      AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ ''
+- 'Title,Completed\nCSVを保存する,false\n'
+      + expected - actual
+
+      +Title,Completed
+      +CSVを保存する,false
+
+      at Context.<anonymous> (file:///home/yasuji/WorkSpace/really-large-application/index.test.js:65:12)
+```
+
+テストを通す方法がわかりません。
