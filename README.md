@@ -67,6 +67,63 @@ undefined
     0, 0, 0, 0, 0,
     0, 0, 0, 0, 0
   ] }
+```
 
+## Step3 Modifying a Buffer
 
+バッファの変更
 
+```shell
+> hiBuf[1] = 'e';
+'e'
+> hiBuf.toString();
+'H\x00!'
+> hiBuf[1] = 101;
+101
+> hiBuf.toString();
+'He!'
+> hiBuf[2] = 121;
+121
+> hiBuf.toString();
+'Hey'
+// バッファの範囲外に書き込む
+> hiBuf[3] = 111;
+111
+> hiBuf.toString();
+'Hey'
+// `write()`で全バッファ書き換え
+> hiBuf.write('Hi!');
+3
+> hiBuf.toString();
+'Hi!'
+// 確保したバッファより長いシーケンスを書き込む
+> const petBuf = Buffer.alloc(3);
+undefined
+> petBuf.write('Cats');
+3
+> petBuf.toString();
+'Cat'
+// 確保したバッファより短いシーケンスを書き込む
+> const petBuf2 = Buffer.alloc(4);
+undefined
+> petBuf2.write('Cats');
+4
+> petBuf2.write('Hi');
+2
+> petBuf2.toString();
+'Hits'
+> const wordsBuf = Buffer.from('Banana Nananana');
+undefined
+> const catchphraseBuf = Buffer.from('Not sure Turtle!');
+undefined
+> wordsBuf.copy(catchphraseBuf);
+15
+> catchphraseBuf.toString();
+'Banana Nananana!'
+> catchphraseBuf.write('Not sure Turtle!');
+16
+> wordsBuf.copy(catchphraseBuf, 0, 7, wordsBuf.length);
+8
+> catchphraseBuf.toString();
+'Nananana Turtle!'
+```
