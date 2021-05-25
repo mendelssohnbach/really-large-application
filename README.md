@@ -507,3 +507,33 @@ $ npm test
 ```
 
 テストを通す方法がわかりません。
+
+## Step5 Using Hooks
+
+- `before`: 最初のテストが始まる前に1回実行
+- `beforeEach`: すべてのテストケースの前に実行
+- `after`: 最後のテストケースが完了した後に1回実行
+- `afterEach`: すべてのテストケースの後に実行
+
+```shell
+$ npm test
+
+> really-large-application@1.0.0 test
+> mocha index.test.js
+
+
+
+  統合テスト
+    ✓ TODOsに最初はアイテムは存在しないはずです
+
+  complete()
+    ✓ TODOがない場合は失敗するはずです
+
+  saveToFile()
+    1) エラーなしで単一のTODOを保存する必要があります
+    2) 完了した単一のTODOを保存する必要があります
+
+
+  2 passing (15ms)
+  2 failing
+```

@@ -50,18 +50,33 @@ describe('complete()', function () {
 });
 
 describe('saveToFile()', function () {
-  // 非同期関数テストには`done`コールバックが必須
-  it('単一のTODOを保存する必要があります', async function () {
-    let todos = new Todos();
-    todos.add('CSVを保存する');
-    await todos.saveToFile();
+  beforeEach(function () {
+    this.todos = new Todos();
+    this.todos.add('CSVを保存する');
+  });
 
-    // 最初にファイルが存在することを確認
+  afterEach(function () {
+    if (fs.existsSync('todos.csv')) {
+      fs.unlinkSync('todos.csv');
+    }
+  });
+
+  it('エラーなしで単一のTODOを保存する必要があります', async function () {
+    await this.todos.saveToFile();
+
     assert.strictEqual(fs.existsSync('todos.csv'), true);
-    // 期待値を変数に格納
-    const expectedFileContents = 'Title,Completed\nCSVを保存する,false\n';
-    // Bufferオブジェクトを文字列型に変換
-    const content = fs.readFileSync('todos.csv').toString();
+    let expectedFileContents = 'Title,Completed\nCSVを保存する,false\n';
+    let content = fs.readFileSync('todos.csv').toString();
+    assert.strictEqual(content, expectedFileContents);
+  });
+
+  it('完了した単一のTODOを保存する必要があります', async function () {
+    this.todos.complete('CSVを保存する');
+    await this.todos.saveToFile();
+
+    assert.strictEqual(fs.existsSync('todos.csv'), true);
+    let expectedFileContents = 'Title,Completed\nCSVを保存する,true\n';
+    let content = fs.readFileSync('todos.csv').toString();
     assert.strictEqual(content, expectedFileContents);
   });
 });
