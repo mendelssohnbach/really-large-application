@@ -1,4 +1,5 @@
-import fs from 'fs';
+// import fs from 'fs'; // callback
+import fs from 'fs/promises';
 
 // Todosクラスを定義
 class Todos {
@@ -43,7 +44,7 @@ class Todos {
   }
 
   // ファイル保存
-  saveToFile(callback) {
+  saveToFile() {
     // タイトルヘッダー設定
     let fileContents = 'Title,Completed\n';
     this.todos.forEach((todo) => {
@@ -51,7 +52,7 @@ class Todos {
       fileContents += `${todo.title},${todo.completed}\n`;
     });
 
-    fs.writeFile('todos.csv', fileContents, callback);
+    fs.writeFile('todos.csv', fileContents);
   }
 }
 

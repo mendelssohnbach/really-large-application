@@ -425,3 +425,39 @@ $ npm test
 
   3 passing (12ms)
 ```
+
+Promises
+
+- `Promises`では、`it（）`に`done（）`コールバックを含めない
+- `then()`の内側に`assert`を記述
+- テストする`Promise`で`return`する
+
+```shell
+$ npm test
+
+> really-large-application@1.0.0 test
+> mocha index.test.js
+
+
+
+  統合テスト
+    ✓ TODOsに最初はアイテムは存在しないはずです
+
+  complete()
+    ✓ TODOがない場合は失敗するはずです
+
+  saveToFile()
+    1) 単一のTODOを保存する必要があります
+
+
+  2 passing (9ms)
+  1 failing
+
+  1) saveToFile()
+       単一のTODOを保存する必要があります:
+     TypeError: Cannot read property 'then' of undefined
+      at Context.<anonymous> (file:///home/yasuji/WorkSpace/really-large-application/index.test.js:57:30)
+      at processImmediate (internal/timers.js:461:21)
+```
+
+テストを通す方法がわかりません。
