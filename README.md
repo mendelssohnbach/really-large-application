@@ -1,0 +1,39 @@
+# Chapter6
+
+[How To Create a Web Server](https://www.digitalocean.com/community/tutorials/how-to-create-a-web-server-in-node-js-with-the-http-module)
+
+## Step1 Creating a Basic HTTP Server
+
+基本的なHTTPサーバーの作成
+
+```shell
+$ mkdir first-servers
+$ cd first-servers
+```
+
+```js
+import http from 'http';
+
+const host = 'localhost';
+const port = '8000';
+
+const requestListener = function (req, res) {
+  res.writeHead(200, {
+    'Content-Type': 'text/plain;charset=utf-8',
+  });
+  res.end('ハローワールド⚠');
+};
+
+const server = http.createServer(requestListener);
+server.listen(port, host, () => {
+  console.log(`サーバーはhttpで実行されています: ${host}:${port}`);
+});
+```
+
+```shell
+$ node hello.js
+サーバーはhttpで実行されています: localhost:8000
+
+$ curl http://localhost:8000
+ハローワールド⚠
+```
