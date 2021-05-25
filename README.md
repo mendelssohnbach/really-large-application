@@ -73,3 +73,20 @@ $ curl http://localhost:8000
 id,name,email
 1,Suzuki,suzuki@tekitou.com
 ```
+
+HTMLを返す
+
+```js
+const requestListener = (req, res) => {
+  res.setHeader('Content-Type', 'text/html');
+  res.writeHead(200);
+  res.end('<html><body><h1>This is HTML</h1></body></html>');
+};
+```
+
+```shell
+$ curl http://localhost:8000
+<html><body><h1>This is HTML</h1></body></html>
+```
+
+
