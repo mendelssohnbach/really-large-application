@@ -105,4 +105,39 @@ $ node deleteFile.js
 Deleted groceries.csv
 ```
 
+## Step4 Moving Files rename()
+
+`rename（）`ファイルの移動
+
+`moveFile.js`
+
+```js
+import fs from 'fs/promises';
+
+async function moveFile(source, destination) {
+  try {
+    await fs.rename(source, destination);
+    console.log(`Moved file from ${source} to ${destination}`);
+  } catch (error) {
+    console.error(`Got an error trying to move the file: ${error.message}`);
+  }
+}
+
+moveFile('greetings-2.txt', 'test-data/salutations.txt');
+```
+
+
+```shell
+$ ls -la greetings-2.txt
+-rw-rw-r-- 1 yasuji yasuji 28  5月 27 07:58 greetings-2.txt
+$ node moveFile.js
+Moved file from greetings-2.txt to test-data/salutations.txt
+$ ls -la test-data/
+合計 16
+drwxrwxr-x 2 yasuji yasuji 4096  5月 27 08:05 .
+drwxrwxr-x 3 yasuji yasuji 4096  5月 27 08:05 ..
+-rw-rw-r-- 1 yasuji yasuji   28  5月 27 07:56 greetings.txt
+-rw-rw-r-- 1 yasuji yasuji   28  5月 27 08:00 salutations.tx
+```
+
 
