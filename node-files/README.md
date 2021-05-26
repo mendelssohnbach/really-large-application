@@ -78,3 +78,31 @@ name,quantity,price
 eggs,12,1.5
 nutella,1,4
 ```
+
+## Step3 Deleting Files with unlink()
+
+`unlink（）`でファイルを削除する
+
+`deleteFile.js`
+
+```js
+import fs from 'fs/promises';
+
+async function deleteFile(filePath) {
+  try {
+    await fs.unlink(filePath);
+    console.log(`Deleted ${filePath}`);
+  } catch (error) {
+    console.error(`Got an error trying to delete the file: ${error.message}`);
+  }
+}
+
+deleteFile('groceries.csv');
+```
+
+```shell
+$ node deleteFile.js
+Deleted groceries.csv
+```
+
+
