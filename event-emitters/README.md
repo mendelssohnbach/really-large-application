@@ -130,3 +130,59 @@ $ node firstListener.js
 誰かがチケットを買った！
 ```
 
+## Step3 Capturing Event Data
+
+イベントデータのキャプチャ
+
+`emailService.js`
+
+```js
+class EmailService {
+  send(email) {
+    console.log(`Sending email to ${email}`);
+  }
+}
+
+export default EmailService;
+```
+
+`databaseService.js`
+
+```js
+class DatabaseService {
+  save(email, price, timestamp) {
+    console.log(
+      `Running query: INSERT INTO orders VALUES (email, price, created) VALUES (${email}, ${price}, ${timestamp})`
+    );
+  }
+}
+
+export default DatabaseService;
+```
+
+`index.js`
+
+`import`には拡張子が必要
+
+```js
+import TicketManager from './ticketManager.js';
+import EmailService from './emailService.js';
+import DatabaseService from './databaseService.js';
+
+const ticketManager = new TicketManager(3);
+const emailService = new EmailService();
+const databaseService = new DatabaseService();
+
+ticketManager.on('buy', (email, price, timestamp) => {
+  emailService.send(email);
+  databaseService.save(email, price, timestamp);
+});
+
+ticketManager.buy('test@email.com', 10)
+```
+
+```js
+$ node index.js
+Sending email to test@email.com
+Running query: INSERT INTO orders VALUES (email, price, created) VALUES (test@email.com, 10, 1621989571779)
+```
