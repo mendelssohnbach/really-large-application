@@ -398,3 +398,43 @@ $ node index.js
 本文中で最も人気のある単語は「whale」で、3回出現します。
 ```
 
+## Chrome DevTools
+
+`server.js`
+
+```js
+import http from 'http';
+
+const host = 'localhost';
+const port = '8000';
+
+const greetings = ['Hello world', 'Hola mundo', 'Bonjour le monde', 'Hallo Welt', 'Salve mundi'];
+
+const getGreeting = () => {
+  const greeting = greetings[Math.floor(Math.random() * greetings.length)];
+  return greeting;
+};
+```
+
+```shell
+$ $ node --inspect-brk server.js // Chromeデバッガーを起動
+Debugger listening on ws://127.0.0.1:9229/6e10ffe3-bac7-45b6-ba3f-d116e4813711
+For help, see: https://nodejs.org/en/docs/inspector
+Server is running on http://localhost:8000
+```
+
+**Google Chrome**に`chrome://inspect`と入力。`chrome://inspect/#devices`に遷移し、下図のページが表示される。
+
+![inspect](./img/Screenshot001.png)
+
+`Devices`->`Open dedicated DevTools for Node`をクリック。新しいウィンドウが開く。`Sources`ボタンをクリック。
+
+![DevTools](./img/Screenshot002.png)
+
+`Ctrl+P`で目的のプログラムソースを指定
+
+![Sources](./img/Screenshot003.png)
+
+10行目`return greeting;`にブレークポイントを設定
+
+思うように**Chorme**でデバッグできない。
