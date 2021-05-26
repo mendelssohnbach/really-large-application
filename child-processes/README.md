@@ -118,3 +118,122 @@ stdout:
 
 child process exited with code 0
 ```
+
+## Step3  Creating a Child Process with fork()
+
+`fork（）`を使用した子プロセスの作成
+
+`httpServer.js`
+
+```js
+import http from 'http';
+
+const host = 'localhost';
+const port = 8000;
+
+const slowFunction = () => {
+  let counter = 0;
+  while (counter < 500000) {
+  // while (counter < 5000000000) {
+    counter++;
+  }
+
+  return counter;
+};
+
+const requestListener = function (req, res) {
+  if (req.url === '/total') {
+    let slowResult = slowFunction()
+    let message = = `{"totalCount: ${slowResult}}`
+
+    console.log(`Returning /total results`)
+    res.setHeader('Content-Type', 'application/json')
+    res.writeHead(200)
+    res.end(message)
+  } else if (req.url === '/hello') {
+    console.log(`Returning /hello results`)
+    res.setHeader('Content-Type', 'application/json')
+    res.writeHead(200)
+    res.end(`{"message":"hello"}`);
+  }
+};
+
+const server = http.createServer(requestListener);
+server.listen(port, host, () => {
+  console.log(`Server is running on http://${host}:${port}`);
+});
+```
+
+```shell
+$ node httpServer.js
+Server is running on http://localhost:8000
+Returning /total results
+Returning /total results
+Returning /hello results
+
+$ curl http://localhost:8000/total
+{"totalCount: 500000}
+$ curl http://localhost:8000/hello
+{"message":"hello"}
+```
+
+`getCount.js`
+
+```js
+const slowFunction = () => {
+  let counter = 0;
+  while (counter < 5000000000) {
+    counter++;
+  }
+
+  return counter;
+};
+
+process.on('message', (message) => {
+  if (message === 'START') {
+    console.log('Child process received START message');
+    let slowResult = slowFunction();
+    const message = `{"totalCount":${slowResult}}`;
+    process.send(message);
+  }
+});
+```
+
+`httpServer.js`リファクタリング
+
+```js
+import fork from 'child_process';
+...
+const requestListener = function (req, res) {
+  if (req.url === '/total') {
+    const child = fork(process.cwd() + '/getCount');
+    // const child = fork(__dirname + '/getCount');
+
+    child.on('message', (message) => {
+      console.log('Returning /total results');
+      res.setHeader('Content-Type', 'application/json');
+      res.writeHead(200);
+      res.end(message);
+    });
+
+    child.send('START');
+  } else if (req.url === '/hello') {
+    console.log(`Returning /hello results`);
+    res.setHeader('Content-Type', 'application/json');
+    res.writeHead(200);
+    res.end(`{"message":"hello"}`);
+  }
+};
+...
+```
+
+```shell
+$ node httpServer.js
+Server is running on http://localhost:8000
+file:///home/yasuji/WorkSpace/really-large-application/child-processes/httpServer.js:19
+    const child = fork(process.cwd() + '/getCount');
+                       ^
+
+ReferenceError: __dirname is not defined
+```
+
