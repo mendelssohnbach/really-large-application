@@ -8,9 +8,14 @@ class TicketManager extends EventEmitter {
   }
 
   buy(email, price) {
-    // チケットが売れたら-1減らす
-    this.supply--;
-    this.emit('buy', email, price, Date.now());
+    if (this.supply > 0) {
+      // チケットが売れたら-1減らす
+      this.supply--;
+      this.emit('buy', email, price, Date.now());
+      return;
+    }
+
+    this.emit('error', new Error('購入するチケットはもうありません'));
   }
 }
 

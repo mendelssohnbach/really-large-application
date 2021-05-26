@@ -11,4 +11,11 @@ ticketManager.on('buy', (email, price, timestamp) => {
   databaseService.save(email, price, timestamp);
 });
 
+ticketManager.on('error', (error) => {
+  console.error(`エラーを適切に処理する: ${error}`);
+});
+
+ticketManager.buy('test@email.com', 10);
+ticketManager.buy('test@email.com', 10);
+ticketManager.buy('test@email.com', 10);
 ticketManager.buy('test@email.com', 10);

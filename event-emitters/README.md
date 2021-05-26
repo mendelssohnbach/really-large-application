@@ -186,3 +186,62 @@ $ node index.js
 Sending email to test@email.com
 Running query: INSERT INTO orders VALUES (email, price, created) VALUES (test@email.com, 10, 1621989571779)
 ```
+
+# Step4 Handling Error Events
+
+エラーイベントの処理
+
+`ticketManager.js`
+
+```js
+buy(email, price) {
+    if (this.supply > 0) {
+        this.supply—;
+        this.emit("buy", email, price, Date.now());
+        return;
+    }
+
+    this.emit("error", new Error("There are no more tickets left to purchase"));
+}
+```
+
+`index.js`
+
+```js
+ticketManager.buy("test@email.com", 10);
+ticketManager.buy("test@email.com", 10);
+ticketManager.buy("test@email.com", 10);
+ticketManager.buy("test@email.com", 10);
+```
+
+```shell
+$ node index.js
+Sending email to test@email.com
+Running query: INSERT INTO orders VALUES (email, price, created) VALUES (test@email.com, 10, 1621990304786)
+Sending email to test@email.com
+Running query: INSERT INTO orders VALUES (email, price, created) VALUES (test@email.com, 10, 1621990304792)
+Sending email to test@email.com
+Running query: INSERT INTO orders VALUES (email, price, created) VALUES (test@email.com, 10, 1621990304792)
+file:///home/yasuji/WorkSpace/really-large-application/event-emitters/ticketManager.js:18
+    this.emit('error', new Error('購入するチケットはもうありません'));
+                       ^
+
+Error: 購入するチケットはもうありません
+    at TicketManager.buy (file:///home/yasuji/WorkSpace/really-large-application/event-emitters/ticketManager.js:18:24)
+    ...
+```
+
+エラーを適切に処理
+
+```js
+ticketManager.on('error', (error) => {
+  console.error(`エラーを適切に処理する: ${error}`);
+});
+
+ticketManager.buy('test@email.com', 10);
+```
+
+```shell
+Running query: INSERT INTO orders VALUES (email, price, created) VALUES (test@email.com, 10, 1621990881299)
+エラーを適切に処理する: Error: 購入するチケットはもうありません
+```
