@@ -245,3 +245,88 @@ ticketManager.buy('test@email.com', 10);
 Running query: INSERT INTO orders VALUES (email, price, created) VALUES (test@email.com, 10, 1621990881299)
 エラーを適切に処理する: Error: 購入するチケットはもうありません
 ```
+
+## Step5 Managing Events Listeners
+
+イベントリスナーの管理
+
+```js
+console.log(`We have ${ticketManager.listenerCount('buy')} listener(s) for the buy event`);
+console.log(`We have ${ticketManager.listenerCount('error')} listener(s) for the error event`);
+```
+
+```shell
+$ node index.js
+We have 1 listener(s) for the buy event
+We have 1 listener(s) for the error event
+```
+
+```js
+const onBuy = () => {
+  console.log('すぐに削除されます');
+};
+
+ticketManager.on('buy', onBuy);
+
+console.log(
+  `We added a new event listener bringing our total count for the buy event to: ${ticketManager.listenerCount(
+    'buy'
+  )}`
+);
+ticketManager.buy('test@email.com');
+```
+
+```js
+$ node index.js
+We have 1 listener(s) for the buy event
+We have 1 listener(s) for the error event
+We added a new event listener bringing our total count for the buy event to: 2
+Sending email to test@email.com
+Running query: INSERT INTO orders VALUES (email, price, created) VALUES (test@email.com, undefined, 1621996919870)
+すぐに削除されます
+```
+
+```js
+ticketManager.off("buy", onBuy);
+
+console.log(`We now have: ${ticketManager.listenerCount("buy")} listener(s) for the buy event`);
+ticketManager.buy("test@email", 20);
+```
+
+```shell
+$ node index.js
+We have 1 listener(s) for the buy event
+We have 1 listener(s) for the error event
+We added a new event listener bringing our total count for the buy event to: 2
+Sending email to test@email.com
+Running query: INSERT INTO orders VALUES (email, price, created) VALUES (test@email.com, undefined, 1621997209310)
+すぐに削除されます
+We now have: 1 listener(s) for the buy event
+Sending email to test@email
+Running query: INSERT INTO orders VALUES (email, price, created) VALUES (test@email, 20, 1621997209311)
+```
+
+```js
+ticketManager.removeAllListeners('buy');
+console.log(`購入イベントのリスナーは${ticketManager.listenerCount('buy')}人です。`);
+ticketManager.buy('test@mail.com');
+console.log('最後に購入したチケット');
+```
+
+```shell
+$ node index.js
+購入イベントには1のリスナーがいます。
+エラーイベントのリスナーが('error')}人います。
+新しいイベントリスナーを追加して、購入イベントの総数を次のようにしました。: 2
+Sending email to test@email.com
+Running query: INSERT INTO orders VALUES (email, price, created) VALUES (test@email.com, undefined, 1621997855483)
+すぐに削除されます
+現在、購入イベントのリスナーが1: 1人います。
+Sending email to test@email
+Running query: INSERT INTO orders VALUES (email, price, created) VALUES (test@email, 20, 1621997855483)
+購入イベントのリスナーは0人です。
+最後に購入したチケット
+```
+
+すべてのリスナーを削除した後、チケット購入のために電子メールを送信したり、データベースに保存したりすることはなくなりました。
+

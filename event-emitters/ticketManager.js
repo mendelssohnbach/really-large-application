@@ -16,6 +16,8 @@ class TicketManager extends EventEmitter {
     }
 
     this.emit('error', new Error('購入するチケットはもうありません'));
+
+    TicketManager.off('buy', onBuy);
   }
 }
 
