@@ -77,3 +77,44 @@ stdout:
 -rwxrw-r-- 1 yasuji yasuji  129  5月 26 18:55 processNodejsImage.sh
 ```
 
+## Step2 Creating a Child Process with spawn()
+
+`spawn（）`を使用した子プロセスの作成
+
+`findFiles.js`
+
+```js
+import { spawn } from 'child_process';
+
+const child = spawn('find', ['.']);
+
+child.stdout.on('data', (data) => {
+  console.log(`stdout: \n${data}`);
+});
+
+child.stderr.on('data', (data) => {
+  console.error(`stderr: \n${data}`);
+});
+
+child.on('error', (error) => {
+  console.error(`error: ${error.message}`);
+});
+
+child.on('close', (code) => {
+  console.log(`child process exited with code ${code}`);
+});
+```
+
+```shell
+$ node findFiles.js
+stdout:
+.
+./processNodejsImage.sh
+./findFiles.js
+./README.md
+./nodejs-logo.svg
+./getNodejsImage.js
+./listFiles.js
+
+child process exited with code 0
+```
