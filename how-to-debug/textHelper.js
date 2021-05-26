@@ -18,7 +18,8 @@ const countWords = (words) => {
   let map = {};
   words.forEach((word) => {
     debugger;
-    if (word in map) {
+    if (!(word in map)) {
+      // if (word in map) {
       map[word] = 1;
     } else {
       map[word] += 1;
