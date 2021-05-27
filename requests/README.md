@@ -323,7 +323,50 @@ Updated data
 { username: 'nakanishi', id: 1 }
 ```
 
+## Step5 DELETE Request
 
+DELETEリクエスト
 
+`deleteRequest.js`
+
+```js
+import https from 'https';
+
+const options = {
+  host: 'jsonplaceholder.typicode.com',
+  path: '/users/1',
+  method: 'DELETE',
+  headers: {
+    Accept: 'application/json',
+  },
+};
+
+const request = https.request(options, (res) => {
+  if (res.statusCode !== 200) {
+    console.error(`Did not get an OK from the server. Code: ${res.statusCode}`);
+    res.resume();
+    return;
+  }
+
+  let data = '';
+
+  res.on('data', (chunk) => {
+    data += chunk;
+  });
+
+  res.on('close', () => {
+    console.log('Deleted user');
+    console.log(JSON.parse(data));
+  });
+});
+
+request.end();
+```
+
+```shell
+$ node deleteRequest.js
+Deleted user
+{}
+```
 
 
